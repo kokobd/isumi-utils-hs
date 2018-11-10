@@ -1,0 +1,48 @@
+cabal-version:  2.2
+name:           isumi-utils-hs
+version:        0.1.0.0
+synopsis:       Isumi's commonly used utility functions
+description:    Please see the README on GitHub at <https://github.com/isumi/isumi-utils-hs#README.md>
+category:       Utils
+stability:      experimental
+homepage:       https://github.com/zelinf/isumi-utils-hs#readme
+bug-reports:    https://github.com/zelinf/isumi-utils-hs/issues
+author:         isumi
+maintainer:     contact@zelinf.net
+copyright:      (c) 2018 Isumi Feng
+license:        BSD-3-Clause
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+common deps
+  build-depends:
+      base >=4.10 && <5
+    , containers
+  ghc-options: -Wall
+
+source-repository head
+  type: git
+  location: https://github.com/zelinf/isumi-utils-hs
+
+library
+  import: deps
+  exposed-modules:
+      Isumi.Utils.Map
+  hs-source-dirs: src
+  default-language: Haskell2010
+
+test-suite isumi-utils-hs-test
+  import: deps
+  type: exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is: Spec.hs
+  -- other-modules:
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+    , isumi-utils-hs
+    , hspec
+  build-tool-depends:
+      hspec-discover:hspec-discover
+  default-language: Haskell2010
