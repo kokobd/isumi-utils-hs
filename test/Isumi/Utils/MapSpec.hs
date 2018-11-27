@@ -3,9 +3,9 @@
 
 module Isumi.Utils.MapSpec where
 
-import           Test.Hspec
-
 import           Isumi.Utils.Map
+
+import           TestPrelude
 
 spec :: Spec
 spec = do

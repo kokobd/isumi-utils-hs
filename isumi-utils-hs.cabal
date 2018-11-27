@@ -19,17 +19,25 @@ extra-source-files:
 common deps
   build-depends:
       base >=4.10 && <5
-    , containers
   ghc-options: -Wall
 
 source-repository head
   type: git
   location: https://github.com/zelinf/isumi-utils-hs
 
+flag has_containers
+  default: True
+  manual: True
+
 library
   import: deps
   exposed-modules:
-      Isumi.Utils.Map
+      Isumi.Utils.List
+  if flag(has_containers)
+    exposed-modules:
+        Isumi.Utils.Map
+    build-depends:
+        containers
   hs-source-dirs: src
   default-language: Haskell2010
 
@@ -39,8 +47,18 @@ test-suite isumi-utils-hs-test
   hs-source-dirs: test
   main-is: Spec.hs
   other-modules:
-      Isumi.Utils.MapSpec
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+      TestPrelude
+    , Isumi.Utils.ListSpec
+  if flag(has_containers)
+    other-modules:
+        Isumi.Utils.MapSpec
+    build-depends:
+        containers
+    ghc-options: -DHAS_CONTAINERS
+  ghc-options:
+      -threaded
+      -rtsopts
+      -with-rtsopts=-N
   build-depends:
     , isumi-utils-hs
     , hspec
@@ -48,3 +66,7 @@ test-suite isumi-utils-hs-test
   build-tool-depends:
       hspec-discover:hspec-discover
   default-language: Haskell2010
+  extensions:
+      NoImplicitPrelude
+    , ScopedTypeVariables
+
